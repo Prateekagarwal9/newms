@@ -1,0 +1,29 @@
+﻿apiVersion: v1
+kind: ServiceAccount
+metadata:
+    name: helm
+    namespace: helm-world
+rules:
+    -
+        apiGroups:
+            - ""
+        resources:
+            - pods/portforward
+        verbs:
+            - create
+    -
+        apiGroups:
+            - ""
+        resources:
+            - pods
+        verbs:
+            - list
+roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: tiller-user
+subjects:
+    -
+        kind: ServiceAccount
+        name: helm
+        namespace: helm-world
